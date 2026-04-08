@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "noteforge-shell-v6";
+const CACHE_NAME = "noteforge-shell-v2.0";
 const CDN_CACHE = "noteforge-cdn-v1";
 
 const APP_SHELL = [
