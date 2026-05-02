@@ -187,9 +187,46 @@ async function persistCurrentNote() {
   }
 }
 
+function showConfirmModal(message) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById("confirm-modal");
+    const msgEl = document.getElementById("confirm-modal-msg");
+    const btnOk = document.getElementById("confirm-ok");
+    const btnCancel = document.getElementById("confirm-cancel");
+
+    msgEl.textContent = message;
+    modal.hidden = false;
+    modal.offsetHeight;
+    modal.classList.add("show");
+    btnOk.focus();
+
+    function cleanup(result) {
+      modal.classList.remove("show");
+      setTimeout(() => {
+        modal.hidden = true;
+      }, 250);
+      btnOk.removeEventListener("click", onOk);
+      btnCancel.removeEventListener("click", onCancel);
+      document.removeEventListener("keydown", onKey);
+      resolve(result);
+    }
+    const onOk = () => cleanup(true);
+    const onCancel = () => cleanup(false);
+    const onKey = (e) => {
+      if (e.key === "Enter") cleanup(true);
+      if (e.key === "Escape") cleanup(false);
+    };
+    btnOk.addEventListener("click", onOk);
+    btnCancel.addEventListener("click", onCancel);
+    document.addEventListener("keydown", onKey);
+  });
+}
+
 async function deleteCurrentNote() {
   if (!currentNoteId) return;
-  const confirmed = window.confirm("Supprimer cette note définitivement ?");
+  const confirmed = await showConfirmModal(
+    "Supprimer cette note définitivement ?",
+  );
   if (!confirmed) return;
 
   await deleteNote(currentNoteId);
@@ -252,6 +289,12 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+window.addEventListener("appinstalled", () => {
+  showToast("NoteForge installé !", "success");
+  installBanner.hidden = true;
+  localStorage.setItem("pwa_installed", "true");
+});
+
 function isAppInstalled() {
   return (
     window.matchMedia("(display-mode: standalone)").matches ||
@@ -262,12 +305,11 @@ function isAppInstalled() {
 
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
-  if (
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true
-  ) {
+
+  if (isAppInstalled()) {
     return;
   }
+
   deferredInstallPrompt = e;
   installBanner.hidden = false;
 });

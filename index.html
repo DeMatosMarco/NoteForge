@@ -21,6 +21,14 @@
     />
     <meta name="apple-mobile-web-app-title" content="NoteForge" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="icons/icon-192.png" />
     <link rel="apple-touch-icon" href="icons/icon-192.png" />
@@ -31,40 +39,12 @@
     <header id="app-header">
       <div class="header-left">
         <div class="logo-mark">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <rect
-              x="1"
-              y="1"
-              width="9"
-              height="9"
-              rx="2"
-              fill="var(--accent)"
-            />
-            <rect
-              x="12"
-              y="1"
-              width="9"
-              height="9"
-              rx="2"
-              fill="var(--accent-dim)"
-            />
-            <rect
-              x="1"
-              y="12"
-              width="9"
-              height="9"
-              rx="2"
-              fill="var(--accent-dim)"
-            />
-            <rect
-              x="12"
-              y="12"
-              width="9"
-              height="9"
-              rx="2"
-              fill="var(--accent)"
-            />
-          </svg>
+          <img
+            src="icons/icon-192.png"
+            width="22"
+            height="22"
+            alt="Logo NoteForge"
+          />
         </div>
         <span class="app-title">NoteForge</span>
       </div>
@@ -203,7 +183,49 @@
       <span>Mode hors-ligne — vos notes restent disponibles</span>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/idb-keyval@6/dist/umd.js"></script>
+    <div
+      id="confirm-modal"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirm-modal-msg"
+    >
+      <div class="modal-backdrop"></div>
+      <div class="modal-box">
+        <div class="modal-icon">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <path d="M10 11v6" />
+            <path d="M14 11v6" />
+            <path d="M9 6V4h6v2" />
+          </svg>
+        </div>
+        <p id="confirm-modal-msg" class="modal-msg"></p>
+        <div class="modal-actions">
+          <button id="confirm-cancel" class="modal-btn modal-btn-cancel">
+            Annuler
+          </button>
+          <button id="confirm-ok" class="modal-btn modal-btn-ok">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/idb-keyval@6/dist/umd.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="app.js"></script>
   </body>
 </html>
