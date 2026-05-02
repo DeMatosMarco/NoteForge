@@ -1,2 +1,5 @@
 # NoteForge
-Gestionnaire de notes
+
+Student project: a grade management system.
+
+Currently being improved.
